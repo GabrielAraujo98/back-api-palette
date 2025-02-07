@@ -3,6 +3,7 @@ import uuid
 from flask_cors import CORS
 from dotenv import load_dotenv, dotenv_values 
 from src.users.usersController import getUsers, setUser, deleteUser, editUser, getUsersByEmail
+from src.sugestedPalettes.sugestedPalettesController import setSugestedPalette, getSugestedPalettes
 
 app = Flask(__name__)
 CORS(app)
@@ -51,8 +52,24 @@ def getUserByEmail():
     keywordTarget = request.headers['password']
     print(emailTarget, keywordTarget)
     return jsonify(getUsersByEmail(emailTarget, keywordTarget))
-    
-            
+
+# Rotas Paletta sugerida
+
+@app.route('/api/createsugestedpalette', methods=['POST'])
+def createsugestedpalette():
+    request_data = request.get_json()
+    idSugestedPalette = str(uuid.uuid4())
+    lengthScheme = request_data['length']
+    schemeColors = request_data['colors']
+    schemeType = request_data['scheme']
+    schemeVariation = request_data['variation']
+    return setSugestedPalette(idSugestedPalette, lengthScheme, schemeColors, schemeType, schemeVariation)
+
+@app.route('/api/getsugestedpalettes/', methods=['GET'])
+def getAllSugestedPalettes():
+    response = getSugestedPalettes()
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
 
 if __name__ == '__main__':
     app.run()
