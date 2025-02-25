@@ -47,7 +47,6 @@ def setUser(idUser, nameUser, emailUser, keywordUser, fotoUser):
     conn = getDB()
     cur = conn.cursor()
     print(idUser,  nameUser, emailUser, keywordUser, fotoUser)
-    # stringConcat = """'"""+idUser+"""','"""+ nameUser +"""', '"""+ emailUser +"""', 'ENCRYPTBYPASSPHRASE("PSWD", '"""+ keywordUser +"""')', '"""+ fotoUser +"""'"""
     cur.execute("""INSERT INTO users (id_user, username, email, password, img_url) VALUES (%s, %s, %s, crypt('"""+keywordUser+"""', gen_salt('md5')), %s)""", (idUser,  nameUser, emailUser, fotoUser))
     conn.commit()
     cur.close()

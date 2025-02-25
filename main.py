@@ -69,6 +69,9 @@ def createsugestedpalette():
 def getAllSugestedPalettes():
     response = getSugestedPalettes()
     response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+    response.headers.add('Content-Type', 'application/json')
+    response.headers.add("Access-Control-Allow-Methods", "GET")
     return response
 
 if __name__ == '__main__':
